@@ -10,7 +10,9 @@ import UIKit
 private let reuseIdentifier = "MainCollectionCell"
 
 class MainCollectionVC: UICollectionViewController {
-    private var dataManage: DataMO! = DataMO()
+    
+//    private var dataManage: DataMO! = DataMO()
+    private let dataManage = DataMO.shared
     
     override func viewDidLoad() {
         
@@ -18,37 +20,26 @@ class MainCollectionVC: UICollectionViewController {
             layout.delegate = self
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        self.collectionView.reloadData()
+    }
     
     func uiInit(){
     }
     
     
     @IBAction func add(_ sender: Any) {
-        let alert = UIAlertController(title: "Test", message: "item,price", preferredStyle: .alert)
-        
-        alert.addTextField() {
-            $0.placeholder = "Item"
+        guard let expense = self.storyboard?.instantiateViewController(identifier: "CreateExpenseVC") as? CreateExpenseVC else {
+            return
         }
-        alert.addTextField() {
-            $0.placeholder = "Price"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Save", style: .default){ [unowned self] (_) in
-            
-            if let item = alert.textFields?.first?.text, let price = alert.textFields?.last?.text {
-                self.dataManage.save(item: item, price: price)
-                self.collectionView.reloadData()
-            }
-        })
-        
-        self.present(alert, animated: false, completion: nil)
-        
+        expense.navigationController?.title = "지출 작성"
+        self.navigationController?.pushViewController(expense, animated: true)
     }
 }
 
 // MARK: - CollectionViewLayoutDelegate
 extension MainCollectionVC: PinterestTypeLayoutDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, sizeIndexPath: IndexPath) -> CGFloat {
         let returnSize: CGFloat?
         switch sizeIndexPath.row {
@@ -85,10 +76,9 @@ extension MainCollectionVC {
         
         cell.backgroundColor = getRandomColor()
         
-        let category = self.dataManage.list[indexPath.row].value(forKey: "item") as? String
-        let percent = self.dataManage.list[indexPath.row].value(forKey: "price") as? Int
+        let category = self.dataManage.list[indexPath.row].value(forKey: "name") as? String
+        
         cell.categoryLabel.text = category
-        cell.percentLabel.text = percent?.description
         
         return cell
     }
@@ -96,7 +86,9 @@ extension MainCollectionVC {
 
 // MARK: - Util
 extension MainCollectionVC {
+    
     private func getRandomColor()->UIColor{
+        
             let red = CGFloat(arc4random()) / CGFloat(UInt32.max)
             let green = CGFloat(arc4random()) / CGFloat(UInt32.max)
             let blue = CGFloat(arc4random()) / CGFloat(UInt32.max)

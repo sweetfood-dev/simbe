@@ -9,5 +9,5 @@ import UIKit
 
 class MainCollectionViewCell: UICollectionViewCell {
     @IBOutlet var categoryLabel: UILabel!
-    @IBOutlet var percentLabel: UILabel!    
+    @IBOutlet var percentLabel: UILabel!
 }

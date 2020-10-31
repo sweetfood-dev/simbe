@@ -15,6 +15,8 @@
 		0C16327A253C06A200ED72F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C163279253C06A200ED72F6 /* Assets.xcassets */; };
 		0C16327D253C06A200ED72F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C16327B253C06A200ED72F6 /* LaunchScreen.storyboard */; };
 		0C6470A6254CEFFD0032E869 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6470A5254CEFFD0032E869 /* MainCollectionViewCell.swift */; };
+		0C6470A9254D11230032E869 /* CreateExpenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6470A8254D11230032E869 /* CreateExpenseVC.swift */; };
+		0C6470AC254D25680032E869 /* ExpanseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6470AB254D25680032E869 /* ExpanseTableViewCell.swift */; };
 		0CBD7B28254C03820049AE39 /* PinterestTypeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7B27254C03820049AE39 /* PinterestTypeLayout.swift */; };
 		0CBD7B2E254C30330049AE39 /* MainCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7B2D254C30330049AE39 /* MainCollectionVC.swift */; };
 		0CC50EFD254AF99600160511 /* DataMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC50EFC254AF99600160511 /* DataMO.swift */; };
@@ -31,6 +33,8 @@
 		0C16327C253C06A200ED72F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C16327E253C06A200ED72F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C6470A5254CEFFD0032E869 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C6470A8254D11230032E869 /* CreateExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExpenseVC.swift; sourceTree = "<group>"; };
+		0C6470AB254D25680032E869 /* ExpanseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpanseTableViewCell.swift; sourceTree = "<group>"; };
 		0CBD7B27254C03820049AE39 /* PinterestTypeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestTypeLayout.swift; sourceTree = "<group>"; };
 		0CBD7B2D254C30330049AE39 /* MainCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionVC.swift; sourceTree = "<group>"; };
 		0CC50EFC254AF99600160511 /* DataMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMO.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 		0C16326C253C06A000ED72F6 /* simbe */ = {
 			isa = PBXGroup;
 			children = (
+				0CACFA23254D9E8C0091EF2F /* CoreData */,
 				0C6470A4254CEF970032E869 /* Cell */,
 				0CBD7B2C254C30190049AE39 /* ViewController */,
 				0CBD7B26254C03470049AE39 /* Layout */,
@@ -77,7 +82,6 @@
 				0C16327B253C06A200ED72F6 /* LaunchScreen.storyboard */,
 				0C16327E253C06A200ED72F6 /* Info.plist */,
 				0C163276253C06A000ED72F6 /* simbe.xcdatamodeld */,
-				0CC50EFC254AF99600160511 /* DataMO.swift */,
 			);
 			path = simbe;
 			sourceTree = "<group>";
@@ -86,8 +90,17 @@
 			isa = PBXGroup;
 			children = (
 				0C6470A5254CEFFD0032E869 /* MainCollectionViewCell.swift */,
+				0C6470AB254D25680032E869 /* ExpanseTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		0CACFA23254D9E8C0091EF2F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0CC50EFC254AF99600160511 /* DataMO.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		0CBD7B26254C03470049AE39 /* Layout */ = {
@@ -102,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				0CBD7B2D254C30330049AE39 /* MainCollectionVC.swift */,
+				0C6470A8254D11230032E869 /* CreateExpenseVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -179,6 +193,8 @@
 				0CBD7B28254C03820049AE39 /* PinterestTypeLayout.swift in Sources */,
 				0CBD7B2E254C30330049AE39 /* MainCollectionVC.swift in Sources */,
 				0C163272253C06A000ED72F6 /* ViewController.swift in Sources */,
+				0C6470A9254D11230032E869 /* CreateExpenseVC.swift in Sources */,
+				0C6470AC254D25680032E869 /* ExpanseTableViewCell.swift in Sources */,
 				0C6470A6254CEFFD0032E869 /* MainCollectionViewCell.swift in Sources */,
 				0C16326E253C06A000ED72F6 /* AppDelegate.swift in Sources */,
 				0CC50EFD254AF99600160511 /* DataMO.swift in Sources */,
