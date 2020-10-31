@@ -14,6 +14,10 @@
 		0C163278253C06A000ED72F6 /* simbe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0C163276253C06A000ED72F6 /* simbe.xcdatamodeld */; };
 		0C16327A253C06A200ED72F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C163279253C06A200ED72F6 /* Assets.xcassets */; };
 		0C16327D253C06A200ED72F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C16327B253C06A200ED72F6 /* LaunchScreen.storyboard */; };
+		0C6470A6254CEFFD0032E869 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6470A5254CEFFD0032E869 /* MainCollectionViewCell.swift */; };
+		0CBD7B28254C03820049AE39 /* PinterestTypeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7B27254C03820049AE39 /* PinterestTypeLayout.swift */; };
+		0CBD7B2E254C30330049AE39 /* MainCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7B2D254C30330049AE39 /* MainCollectionVC.swift */; };
+		0CC50EFD254AF99600160511 /* DataMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC50EFC254AF99600160511 /* DataMO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		0C163279253C06A200ED72F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C16327C253C06A200ED72F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C16327E253C06A200ED72F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C6470A5254CEFFD0032E869 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CBD7B27254C03820049AE39 /* PinterestTypeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestTypeLayout.swift; sourceTree = "<group>"; };
+		0CBD7B2D254C30330049AE39 /* MainCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionVC.swift; sourceTree = "<group>"; };
+		0CC50EFC254AF99600160511 /* DataMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,9 @@
 		0C16326C253C06A000ED72F6 /* simbe */ = {
 			isa = PBXGroup;
 			children = (
+				0C6470A4254CEF970032E869 /* Cell */,
+				0CBD7B2C254C30190049AE39 /* ViewController */,
+				0CBD7B26254C03470049AE39 /* Layout */,
 				0C16326D253C06A000ED72F6 /* AppDelegate.swift */,
 				0C16326F253C06A000ED72F6 /* SceneDelegate.swift */,
 				0C163271253C06A000ED72F6 /* ViewController.swift */,
@@ -66,8 +77,33 @@
 				0C16327B253C06A200ED72F6 /* LaunchScreen.storyboard */,
 				0C16327E253C06A200ED72F6 /* Info.plist */,
 				0C163276253C06A000ED72F6 /* simbe.xcdatamodeld */,
+				0CC50EFC254AF99600160511 /* DataMO.swift */,
 			);
 			path = simbe;
+			sourceTree = "<group>";
+		};
+		0C6470A4254CEF970032E869 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0C6470A5254CEFFD0032E869 /* MainCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		0CBD7B26254C03470049AE39 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				0CBD7B27254C03820049AE39 /* PinterestTypeLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		0CBD7B2C254C30190049AE39 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0CBD7B2D254C30330049AE39 /* MainCollectionVC.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,8 +176,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CBD7B28254C03820049AE39 /* PinterestTypeLayout.swift in Sources */,
+				0CBD7B2E254C30330049AE39 /* MainCollectionVC.swift in Sources */,
 				0C163272253C06A000ED72F6 /* ViewController.swift in Sources */,
+				0C6470A6254CEFFD0032E869 /* MainCollectionViewCell.swift in Sources */,
 				0C16326E253C06A000ED72F6 /* AppDelegate.swift in Sources */,
+				0CC50EFD254AF99600160511 /* DataMO.swift in Sources */,
 				0C163278253C06A000ED72F6 /* simbe.xcdatamodeld in Sources */,
 				0C163270253C06A000ED72F6 /* SceneDelegate.swift in Sources */,
 			);
