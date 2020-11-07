@@ -44,7 +44,6 @@ class DataMO {
         do {
             try context.save()
             list.append(object)
-            print("save success")
             return true
         } catch {
             context.rollback()
