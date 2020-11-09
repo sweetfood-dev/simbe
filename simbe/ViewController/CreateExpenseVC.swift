@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum PaymentType: Int {
     
@@ -20,20 +21,25 @@ enum GuestureType: Int {
     case price = 1
 }
 
-class CreateExpenseVC: UIViewController {
+class CreateExpenseVC: UIViewController{
+
+    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
     @IBOutlet var tableView: UITableView!
     
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
-    @IBOutlet var detailTextfield: UITextField!
+    @IBOutlet var detailTextView: UITextView!
     
     @IBOutlet var paymentTypeSegment: UISegmentedControl!
     
     let reuseId = "expanseTableCell"
-    let dataManager = DataMO.shared
     
     weak var modalVC: ModelVC!
+    
+    let context = AppDelegate.context
+    
+    var categoryList: [PayCategory]?
     
     var dateText: String {
         get {
@@ -53,6 +59,8 @@ class CreateExpenseVC: UIViewController {
         }
     }
     
+    let bottomArea = 40.0
+    
     // MARK: - Category Add
     @IBAction func addCategory(_ sender: Any) {
 
@@ -66,8 +74,12 @@ class CreateExpenseVC: UIViewController {
             guard let category = alert.textFields?.first?.text, !category.isEmpty else {
                 return
             }
-            if self.dataManager.save(name: category, paymentInfo: nil) {
+            _ = try? PayCategory.findOrCreateItem(name: category, context: context)
+            do {
+                try context.save()
                 self.tableView.reloadData()
+            }catch {
+                print("saved Item failed \(error.localizedDescription)")
             }
         }))
         
@@ -75,22 +87,37 @@ class CreateExpenseVC: UIViewController {
         
         self.present(alert, animated: false, completion: nil)
     }
+    
+    @IBAction func addExpense(_ sender: Any) {
+        
+    }
+    
+    @IBAction func continueExpanse(_ sender: Any) {
+        
+    }
+    @IBAction func addDetailes(_ sender: Any) {
+        detailTextView.resignFirstResponder()
+    }
+    
 }
 
 // MARK: - TableView DataSource
 extension CreateExpenseVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return dataManager.list.count
+        do {
+            categoryList = try PayCategory.getItemList(context: context)
+        }catch {
+            print("getItemList error \(error.localizedDescription)")
+            return 0
+        }
+        return categoryList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId) as! ExpanseTableViewCell
-        
-        let category = dataManager.list[indexPath.row].value(forKey: "name") as? String
-        cell.categoryLabel.text = category
+        cell.categoryLabel?.text = categoryList?[indexPath.row].name
         return cell
     }
         
@@ -99,8 +126,10 @@ extension CreateExpenseVC: UITableViewDataSource {
 // MARK: - Life cycle, Action Method, UI
 extension CreateExpenseVC {
     override func viewDidLoad() {
+        print("viewdidload")
         initSetup()
         
+        detailTextView.delegate = self
     }
     
     func initSetup(){
@@ -118,6 +147,9 @@ extension CreateExpenseVC {
         format.dateFormat = "yyyy-MM-dd"
         let toDay = format.string(from: Date())
         dateLabel.text = toDay
+        
+        detailTextView.layer.borderWidth = 1.0
+        detailTextView.layer.borderColor = UIColor.black.cgColor
     }
     
     func setupSubVC(){
@@ -168,12 +200,10 @@ extension CreateExpenseVC {
             setupSubVC()
             self.modalVC.setCalendar()
             showViewController()
-            break
         case GuestureType.price.rawValue:
             setupSubVC()
             self.modalVC.setCalcurator()
             showViewController()
-            break
         default:
             break
         }
@@ -181,3 +211,44 @@ extension CreateExpenseVC {
     }
 }
 
+// MARK: - Touches Method
+extension CreateExpenseVC {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+// MARK: - NOtification Method
+extension CreateExpenseVC {
+    
+    @objc func keyboardWillHide(noti: Notification){
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func keyboardWillShow(noti: Notification){
+        guard let userInfo = noti.userInfo else {
+            return
+        }
+        
+        guard let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        let keyboardHeight = keyboardFrame.height
+        self.view.frame.origin.y = -keyboardHeight + self.view.safeAreaInsets.bottom + CGFloat(bottomArea)
+    }
+}
+// MARK: - TextViewDelegate
+extension CreateExpenseVC: UITextViewDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+}

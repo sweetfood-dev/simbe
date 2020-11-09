@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="ItemMO" syncable="YES" codeGenerationType="class">
+    <entity name="PayCategory" representedClassName=".PayCategory" syncable="YES" codeGenerationType="category">
         <attribute name="name" attributeType="String"/>
-        <relationship name="paymentinfo" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="PaymentInfo"/>
+        <relationship name="paymentInfo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PaymentInfo" inverseName="category" inverseEntity="PaymentInfo"/>
     </entity>
-    <entity name="PaymentInfo" representedClassName="PaymentInfoMO" syncable="YES" codeGenerationType="class">
+    <entity name="PaymentInfo" representedClassName=".PaymentInfo" syncable="YES" codeGenerationType="category">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="detail" optional="YES" attributeType="String"/>
         <attribute name="paymenttype" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="price" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PayCategory" inverseName="paymentInfo" inverseEntity="PayCategory"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="27" width="128" height="73"/>
-        <element name="PaymentInfo" positionX="-296.40234375" positionY="-15.3046875" width="128" height="103"/>
+        <element name="PayCategory" positionX="-44.3359375" positionY="135.734375" width="128" height="73"/>
+        <element name="PaymentInfo" positionX="-513.4296875" positionY="34.140625" width="128" height="118"/>
     </elements>
 </model>

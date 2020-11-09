@@ -11,11 +11,7 @@ private let reuseIdentifier = "MainCollectionCell"
 
 class MainCollectionVC: UICollectionViewController {
     
-//    private var dataManage: DataMO! = DataMO()
-    private let dataManage = DataMO.shared
-    
     override func viewDidLoad() {
-        
         if let layout = collectionView?.collectionViewLayout as? PinterestTypeLayout {
             layout.delegate = self
         }
@@ -67,7 +63,7 @@ extension MainCollectionVC {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return dataManage.list.count
+        return 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -75,10 +71,6 @@ extension MainCollectionVC {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MainCollectionViewCell
         
         cell.backgroundColor = getRandomColor()
-        
-        let category = self.dataManage.list[indexPath.row].value(forKey: "name") as? String
-        
-        cell.categoryLabel.text = category
         
         return cell
     }

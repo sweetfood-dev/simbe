@@ -35,14 +35,14 @@ class ModelVC: UIViewController {
     let btnHeight: CGFloat = 30
     
     let brain = CalcuratorBrain()
-    var isTyping = false
+    var isTyping = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mCalendar.isHidden = true
         mCalcurator.isHidden = true
-    }
+                                                                                          }
     
     @IBAction func closedBtn(_ sender: Any) {
         delegate?.closeViewController()
