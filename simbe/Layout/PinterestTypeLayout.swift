@@ -25,7 +25,8 @@ class PinterestTypeLayout: UICollectionViewLayout {
         
         return collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right)
     }
-    private var contentHeight: CGFloat = 0
+//    private var contentHeight: CGFloat = 0
+    var contentHeight: CGFloat = 0
     private let defaultHeight: CGFloat = 180
     
     override var collectionViewContentSize: CGSize {
@@ -54,12 +55,17 @@ extension PinterestTypeLayout {
         // 첫 번째 섹션의 아이템 갯 수 만큼 반복
         for item in 0 ..< collectionView.numberOfItems(inSection: 0){
             let indexPath = IndexPath(item: item, section: 0)
-            
             let customHeight = delegate?.collectionView(collectionView, sizeIndexPath: indexPath) ?? defaultHeight
             
             let height = customHeight
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnsWidth, height: height)
             
+            if yOffset[0] > yOffset[1]{
+                column = 1
+            }else {
+                column = 0
+            }
+            
+            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnsWidth, height: height)
             let insetFrame = frame
             
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
@@ -68,7 +74,6 @@ extension PinterestTypeLayout {
             
             contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
-            
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
     }

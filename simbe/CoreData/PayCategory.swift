@@ -9,12 +9,11 @@ import UIKit
 import CoreData
 
 class PayCategory: NSManagedObject {
-        
+    
     class func findOrCreateItem(name: String, context: NSManagedObjectContext) throws -> PayCategory{
         // name을 가진 Item 검색
         let request :NSFetchRequest<PayCategory> = PayCategory.fetchRequest()
         request.predicate = NSPredicate(format: "name = %@", name)
-        
         do {
             let finded = try context.fetch(request)
             // 있으면 return
@@ -35,13 +34,22 @@ class PayCategory: NSManagedObject {
         return payCategory
     }
     
-    class func getItemList(context: NSManagedObjectContext) throws -> [PayCategory] {
+    class func getItemList(context: NSManagedObjectContext) -> [PayCategory]? {
         let request: NSFetchRequest<PayCategory> = PayCategory.fetchRequest()
-        do {
-            let itemList = try context.fetch(request)
-            return itemList
-        }catch {
-            throw error
+        
+        let itemList = try? context.fetch(request)
+        return itemList
+    }
+    
+    func getSortedDateArray() -> [PaymentInfo] {
+        let paymentInfo = (self.paymentInfo as? Set<PaymentInfo>) ?? Set<PaymentInfo>()
+        
+        var paymentInfoArr = Array(paymentInfo)
+        if paymentInfoArr.count > 0 {
+            paymentInfoArr = paymentInfoArr.sorted(by: {
+                $0.date! < $1.date!
+            })
         }
+        return paymentInfoArr
     }
 }

@@ -130,7 +130,6 @@ extension ModelVC: FSCalendarDelegate, FSCalendarDataSource {
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd"
         let selectedDate = format.string(from: date)
-        
         delegate?.dateText = selectedDate
         delegate?.closeViewController()
     }

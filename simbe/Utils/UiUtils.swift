@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable extension UIButton {
+@IBDesignable extension UIView {
     @IBInspectable var borderWidth: CGFloat {
             set {
                 layer.borderWidth = newValue

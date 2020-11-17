@@ -50,14 +50,25 @@ class CreateExpenseVC: UIViewController{
         }
     }
     
-    var priceText: String {
+    var priceText: String? {
         get {
-            return priceLabel.text ?? "0"
+            return priceLabel.text
         }
         set {
             priceLabel.text = newValue
         }
     }
+    
+    var detailText: String {
+        get {
+            return detailTextView.text
+        }
+        set {
+            detailTextView.text = newValue
+        }
+    }
+    
+    var selectedCategory: PayCategory?
     
     let bottomArea = 40.0
     
@@ -77,8 +88,9 @@ class CreateExpenseVC: UIViewController{
             _ = try? PayCategory.findOrCreateItem(name: category, context: context)
             do {
                 try context.save()
+                categoryList = PayCategory.getItemList(context: context)
                 self.tableView.reloadData()
-            }catch {
+             }catch {
                 print("saved Item failed \(error.localizedDescription)")
             }
         }))
@@ -89,28 +101,59 @@ class CreateExpenseVC: UIViewController{
     }
     
     @IBAction func addExpense(_ sender: Any) {
-        
+        addLogic(){ [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func continueExpanse(_ sender: Any) {
-        
+        addLogic() { [weak self] in
+            self?.setUi()
+        }
     }
     @IBAction func addDetailes(_ sender: Any) {
         detailTextView.resignFirstResponder()
     }
     
+    func addLogic(success: (() -> ())? = nil ){
+        guard let category = selectedCategory else {
+            let alert = UIAlertController(title: "알림", message: "카테고리를 선택해야 합니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: false, completion: nil)
+            return
+        }
+        
+        guard let priceVar = Int(priceText!) else {
+            let alert = UIAlertController(title: "알림", message: "금액을 입력해야 합니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: false, completion: nil)
+            return
+        }
+        
+        
+        let dateString = dateText
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd"
+        format.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        let date = format.date(from: dateString)!
+        let detail = detailText
+        let paymentType = NSNumber(value:paymentTypeSegment.selectedSegmentIndex)
+        let price = NSNumber(value: priceVar)
+        let paymentInfoData = PaymentInfoData(date: date, detail: detail, paymenttype: paymentType.int16Value, price: price.int64Value, category: category)
+        _ = PaymentInfo.createInfo(info: paymentInfoData, context: context)
+        do {
+            try context.save()
+            success?()
+        }catch {
+            print("save PaymentInfo error \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: - TableView DataSource
 extension CreateExpenseVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        do {
-            categoryList = try PayCategory.getItemList(context: context)
-        }catch {
-            print("getItemList error \(error.localizedDescription)")
-            return 0
-        }
         return categoryList?.count ?? 0
     }
     
@@ -120,16 +163,21 @@ extension CreateExpenseVC: UITableViewDataSource {
         cell.categoryLabel?.text = categoryList?[indexPath.row].name
         return cell
     }
-        
+}
+// MARK: - TableView Delegate
+extension CreateExpenseVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCategory = categoryList?[indexPath.row]
+    }
 }
 
 // MARK: - Life cycle, Action Method, UI
 extension CreateExpenseVC {
     override func viewDidLoad() {
-        print("viewdidload")
         initSetup()
-        
         detailTextView.delegate = self
+        
+        categoryList = PayCategory.getItemList(context: context)
     }
     
     func initSetup(){
@@ -147,6 +195,8 @@ extension CreateExpenseVC {
         format.dateFormat = "yyyy-MM-dd"
         let toDay = format.string(from: Date())
         dateLabel.text = toDay
+        
+        priceText = "금액을 입력해 주세요."
         
         detailTextView.layer.borderWidth = 1.0
         detailTextView.layer.borderColor = UIColor.black.cgColor
