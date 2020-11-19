@@ -134,7 +134,8 @@ class CreateExpenseVC: UIViewController{
         let dateString = dateText
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd"
-        format.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        format.timeZone = TimeZone(abbreviation: "KST")
+        format.locale = Locale(identifier: "ko_kr")
         let date = format.date(from: dateString)!
         let detail = detailText
         let paymentType = NSNumber(value:paymentTypeSegment.selectedSegmentIndex)

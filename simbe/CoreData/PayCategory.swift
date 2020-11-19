@@ -52,4 +52,10 @@ class PayCategory: NSManagedObject {
         }
         return paymentInfoArr
     }
+    
+    /*
+    func getSelectDate(from: Date, to: Date) -> [PaymentInfo] {
+        let request :NSFetchRequest<PayCategory> = PayCategory.fetchRequest()
+        request.predicate = NSPredicate(format: "%K < %@ AND %K > %@", #keyPath(PayCategory.paymentInfo))
+    }*/
 }

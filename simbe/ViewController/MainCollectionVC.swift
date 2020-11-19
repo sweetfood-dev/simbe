@@ -19,6 +19,14 @@ class MainCollectionVC: UICollectionViewController {
         set {
         }
     }
+    var tabBarHeight: CGFloat {
+        return self.tabBarController?.tabBar.frame.size.height ?? 0
+    }
+    var collectionViewContentHeight: CGFloat {
+        get{
+            return (self.collectionView.frame.height - self.view.getTopSafeAreaHeight() - tabBarHeight)
+        }
+    }
     
     override func viewDidLoad() {
         if let layout = collectionView?.collectionViewLayout as? PinterestTypeLayout {
@@ -26,6 +34,7 @@ class MainCollectionVC: UICollectionViewController {
         }
         
         categoryList = PayCategory.getItemList(context: context)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         self.collectionView.reloadData()
@@ -49,18 +58,17 @@ extension MainCollectionVC: PinterestTypeLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, sizeIndexPath: IndexPath) -> CGFloat {
         let returnSize: CGFloat?
-        let tabBarHeight: CGFloat! = self.tabBarController?.tabBar.frame.size.height
         switch sizeIndexPath.row {
         case 0 :
-            returnSize = (self.collectionView.frame.height - self.view.getTopSafeAreaHeight() - tabBarHeight) * 0.30 * 2
+            returnSize = collectionViewContentHeight * 0.30 * 2
         case 1 :
-            returnSize = (self.collectionView.frame.height - self.view.getTopSafeAreaHeight() - tabBarHeight) * 0.25 * 2
+            returnSize = collectionViewContentHeight * 0.25 * 2
         case 2 :
-            returnSize = (self.collectionView.frame.height - self.view.getTopSafeAreaHeight() - tabBarHeight) * 0.20 * 2
+            returnSize = collectionViewContentHeight * 0.20 * 2
         case 3 :
-            returnSize = (self.collectionView.frame.height - self.view.getTopSafeAreaHeight() - tabBarHeight) * 0.15 * 2
+            returnSize = collectionViewContentHeight * 0.15 * 2
         case 4 :
-            returnSize = (self.collectionView.frame.height - self.view.getTopSafeAreaHeight() - tabBarHeight) * 0.10 * 2
+            returnSize = collectionViewContentHeight * 0.10 * 2
         default :
             returnSize = 0
         }
@@ -101,10 +109,15 @@ extension MainCollectionVC {
             return
         }
         payment.navigationItem.title = categoryList?[indexPath.row].name
-        print("paymentInfo count : \(paymentInfo.count)")
-        var paymentInfoArray = categoryList?[indexPath.row].getSortedDateArray()
-        payment.paymentList = paymentInfoArray
-        self.navigationController?.pushViewController(payment, animated: true)
+        let categoryName = categoryList?[indexPath.row].name ?? ""
+        print("\(Date().startOfDay)\n \(Date().endOfDay)\n \(Date().startOfMonth)\n \(Date().endOfMonth)")
+        let from = Date().startOfMonth
+        let to = Date().endOfDay
+        if let paymentInfoArray = PaymentInfo.getSelectDate(context: context, category: categoryName, from: from, to: to) {
+            payment.paymentList = paymentInfoArray
+            self.navigationController?.pushViewController(payment, animated: true)
+        }
+        
     }
 }
 
@@ -120,4 +133,30 @@ extension MainCollectionVC {
             return UIColor.init(red: red, green: green, blue: blue, alpha: 1)
         }
     
+}
+
+extension Date {
+    var startOfDay: Date {
+        return (Calendar.current.startOfDay(for: self) + 32400)
+    }
+
+    var endOfDay: Date {
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        let cal = Calendar.current
+        return Calendar.current.date(byAdding: components, to: startOfDay)!
+    }
+
+    var startOfMonth: Date {
+        let components = Calendar.current.dateComponents([.year, .month], from: startOfDay)
+        return Calendar.current.date(from: components)! + 32400
+    }
+
+    var endOfMonth: Date {
+        var components = DateComponents()
+        components.month = 1
+        components.second = -1
+        return Calendar.current.date(byAdding: components, to: startOfMonth)!
+    }
 }

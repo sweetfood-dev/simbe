@@ -63,6 +63,7 @@ class PaymentInfoVC: UITableViewController {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
+        print("\(paymentList[indexPath.row].date!)")
         cell?.dateLabel.text = formatter.string(from:paymentList[indexPath.row].date!)
         cell?.categoryLabel.text = paymentList[indexPath.row].category?.name
         cell?.priceLabel.text = paymentList[indexPath.row].price.description + " 원"
