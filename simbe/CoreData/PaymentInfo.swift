@@ -20,27 +20,27 @@ class PaymentInfo: NSManagedObject {
     class func createInfo(info: PaymentInfoData, context: NSManagedObjectContext) -> PaymentInfo{
         // 없으면 생성 후 return
         let payInfo = PaymentInfo(context: context)
-        payInfo.date = info.date
+        payInfo.date = info.date + 32400
         payInfo.detail = info.detail
         payInfo.paymenttype = info.paymenttype
         payInfo.price = info.price
         payInfo.category = info.category
-        print("Create Date \(info.date)")
         return payInfo
     }
     
+    class func getItemList(context: NSManagedObjectContext) -> [PaymentInfo]? {
+        let request: NSFetchRequest<PaymentInfo> = PaymentInfo.fetchRequest()
+        
+        let itemList = try? context.fetch(request)
+        return itemList
+    }
     
     class func getSelectDate(context: NSManagedObjectContext, category: String, from: Date, to: Date) -> [PaymentInfo]? {
         let fromNsDate = from as NSDate
         let toNsDate = to as NSDate
-        
-        print("from : \(from) to : \(to)")
-        
         let request :NSFetchRequest<PaymentInfo> = PaymentInfo.fetchRequest()
-//        request.predicate = NSPredicate(format: "category.name == %@ AND %K < %@ AND %K > %@",category, #keyPath(PaymentInfo.date),fromNsDate, #keyPath(PaymentInfo.date), toNsDate)
-        request.predicate = NSPredicate(format: "category.name == %@ AND date > %@ AND date < %@",category, fromNsDate, toNsDate)
-        
-        var itemList = try? context.fetch(request)
+        request.predicate = NSPredicate(format: "category.name == %@ AND date => %@ AND date =< %@",category, fromNsDate, toNsDate)
+        var itemList = try? context.fetch(request)        
         if itemList != nil {
             itemList = itemList?.sorted(by: {
                 $0.date! < $1.date!
@@ -48,14 +48,16 @@ class PaymentInfo: NSManagedObject {
         }
         return itemList
     }
+    
+    class func getPeriodExpending(context: NSManagedObjectContext, category: String, from: Date, to: Date) -> Int {
+        guard let itemList = getSelectDate(context: context, category: category, from: from, to: to) else {
+            return 0
+        }
+        var totalPrice = 0
+        for item in itemList {
+            totalPrice = totalPrice + Int(item.price)
+        }
+        
+        return totalPrice
+    }
 }
-
-//let paymentInfo = (self.paymentInfo as? Set<PaymentInfo>) ?? Set<PaymentInfo>()
-//
-//var paymentInfoArr = Array(paymentInfo)
-//if paymentInfoArr.count > 0 {
-//    paymentInfoArr = paymentInfoArr.sorted(by: {
-//        $0.date! < $1.date!
-//    })
-//}
-//return paymentInfoArr

@@ -72,8 +72,9 @@ extension PinterestTypeLayout {
             attributes.frame = insetFrame
             cache.append(attributes)
             
-            contentHeight = max(contentHeight, frame.maxY)
+//            contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
+            contentHeight = max(yOffset[0], yOffset[1])
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
     }

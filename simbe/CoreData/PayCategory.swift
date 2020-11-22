@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 
 class PayCategory: NSManagedObject {
+    var currentMonthPrice = 0
+    var percentage = 0.0
     
     class func findOrCreateItem(name: String, context: NSManagedObjectContext) throws -> PayCategory{
         // name을 가진 Item 검색
@@ -38,6 +40,7 @@ class PayCategory: NSManagedObject {
         let request: NSFetchRequest<PayCategory> = PayCategory.fetchRequest()
         
         let itemList = try? context.fetch(request)
+        
         return itemList
     }
     

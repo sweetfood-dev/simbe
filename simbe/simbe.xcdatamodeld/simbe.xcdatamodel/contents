@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PayCategory" representedClassName=".PayCategory" syncable="YES" codeGenerationType="category">
         <attribute name="name" attributeType="String"/>
-        <relationship name="paymentInfo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PaymentInfo" inverseName="category" inverseEntity="PaymentInfo"/>
+        <relationship name="paymentInfo" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PaymentInfo" inverseName="category" inverseEntity="PaymentInfo"/>
     </entity>
     <entity name="PaymentInfo" representedClassName=".PaymentInfo" syncable="YES" codeGenerationType="category">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>

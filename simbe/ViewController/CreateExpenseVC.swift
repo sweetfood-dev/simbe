@@ -137,6 +137,7 @@ class CreateExpenseVC: UIViewController{
         format.timeZone = TimeZone(abbreviation: "KST")
         format.locale = Locale(identifier: "ko_kr")
         let date = format.date(from: dateString)!
+        print("")
         let detail = detailText
         let paymentType = NSNumber(value:paymentTypeSegment.selectedSegmentIndex)
         let price = NSNumber(value: priceVar)
@@ -169,6 +170,21 @@ extension CreateExpenseVC: UITableViewDataSource {
 extension CreateExpenseVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCategory = categoryList?[indexPath.row]
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let deleteDate = categoryList?[indexPath.row]
+            context.delete(deleteDate!)
+            do {
+                try context.save()
+                categoryList = PayCategory.getItemList(context: context)
+            } catch {
+                print("delete Error \(error.localizedDescription)")
+                context.rollback()
+            }
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
 
