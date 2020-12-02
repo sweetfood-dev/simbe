@@ -72,8 +72,6 @@ class PaymentInfoVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let colorPicker = UIColorPickerViewController()
-        self.present(colorPicker, animated: false, completion: nil)
     }
     
     override public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

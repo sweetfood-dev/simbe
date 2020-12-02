@@ -12,7 +12,7 @@ class PayCategory: NSManagedObject {
     var currentMonthPrice = 0
     var percentage = 0.0
     
-    class func findOrCreateItem(name: String, context: NSManagedObjectContext) throws -> PayCategory{
+    class func findOrCreateItem(name: String, color: UIColor, context: NSManagedObjectContext) throws -> PayCategory{
         // name을 가진 Item 검색
         let request :NSFetchRequest<PayCategory> = PayCategory.fetchRequest()
         request.predicate = NSPredicate(format: "name = %@", name)
@@ -32,6 +32,7 @@ class PayCategory: NSManagedObject {
         // 없으면 생성 후 return
         let payCategory = PayCategory(context: context)
         payCategory.name = name
+        payCategory.color = color
         
         return payCategory
     }

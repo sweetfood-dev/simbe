@@ -155,7 +155,7 @@ extension MainCollectionVC {
         let categories = getCategorySortedPercent()
         let percent = categories[indexPath.row].percentage * 100
         
-        cell.backgroundColor = getRandomColor()
+        cell.backgroundColor = categories[indexPath.row].color as? UIColor
         cell.categoryLabel.text = categories[indexPath.row].name
         cell.percentLabel.text = round(percent).description + "%"
         return cell
@@ -179,9 +179,7 @@ extension MainCollectionVC {
         
         payment.navigationItem.title = categories[indexPath.row].name
         
-        let categoryName = categories[indexPath.row].name ?? ""
-        let from = Date().startOfMonth
-        let to = Date().endOfDay
+        let categoryName = categories[indexPath.row].name ?? ""        
         if let paymentInfoArray = PaymentInfo.getSelectDate(context: context, category: categoryName, from: fromDate, to: toDate) {
             payment.paymentList = paymentInfoArray
             self.navigationController?.pushViewController(payment, animated: true)

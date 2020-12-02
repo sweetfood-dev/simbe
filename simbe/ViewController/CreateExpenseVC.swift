@@ -85,7 +85,8 @@ class CreateExpenseVC: UIViewController{
             guard let category = alert.textFields?.first?.text, !category.isEmpty else {
                 return
             }
-            _ = try? PayCategory.findOrCreateItem(name: category, context: context)
+            let colorInfo = getRandomColor()
+            _ = try? PayCategory.findOrCreateItem(name: category, color: colorInfo,context: context)
             do {
                 try context.save()
                 categoryList = PayCategory.getItemList(context: context)
@@ -150,6 +151,15 @@ class CreateExpenseVC: UIViewController{
             print("save PaymentInfo error \(error.localizedDescription)")
         }
     }
+    
+    private func getRandomColor()->UIColor{
+        
+        let red = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        let green = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        let blue = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        
+        return UIColor.init(red: red, green: green, blue: blue, alpha: 1)
+    }
 }
 
 // MARK: - TableView DataSource
@@ -162,7 +172,14 @@ extension CreateExpenseVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId) as! ExpanseTableViewCell
+        
         cell.categoryLabel?.text = categoryList?[indexPath.row].name
+        if let color = categoryList?[indexPath.row].color as? UIColor{
+            cell.setColorView(color: color)
+        }
+//        cell.colorView.backgroundColor = categoryList?[indexPath.row].color as? UIColor
+        
+        
         return cell
     }
 }

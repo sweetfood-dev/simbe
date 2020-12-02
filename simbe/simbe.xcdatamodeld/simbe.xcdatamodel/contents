@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PayCategory" representedClassName=".PayCategory" syncable="YES" codeGenerationType="category">
+        <attribute name="color" optional="YES" attributeType="Transformable"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="paymentInfo" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PaymentInfo" inverseName="category" inverseEntity="PaymentInfo"/>
     </entity>
@@ -12,7 +13,7 @@
         <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PayCategory" inverseName="paymentInfo" inverseEntity="PayCategory"/>
     </entity>
     <elements>
-        <element name="PayCategory" positionX="-44.3359375" positionY="135.734375" width="128" height="73"/>
+        <element name="PayCategory" positionX="-44.3359375" positionY="135.734375" width="128" height="88"/>
         <element name="PaymentInfo" positionX="-513.4296875" positionY="34.140625" width="128" height="118"/>
     </elements>
 </model>

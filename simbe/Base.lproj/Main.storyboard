@@ -205,7 +205,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61U-BF-YPc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6066.666666666667" y="825"/>
+            <point key="canvasLocation" x="6068" y="949"/>
         </scene>
         <!--지출 작성-->
         <scene sceneID="L6H-ns-nNE">
@@ -240,25 +240,34 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kMN-Ob-McD">
-                                                    <rect key="frame" x="234" y="7" width="150" height="30"/>
-                                                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q1X-xb-02K">
+                                                    <rect key="frame" x="175" y="5" width="150" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="JUW-dR-1wL"/>
-                                                        <constraint firstAttribute="width" constant="150" id="S4i-HM-dau"/>
+                                                        <constraint firstAttribute="width" constant="150" id="CCn-kl-xfV"/>
                                                     </constraints>
-                                                </imageView>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fG9-3B-Pvf" customClass="UIColorWell">
+                                                    <rect key="frame" x="340" y="0.0" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="RWL-Hi-dGA"/>
+                                                        <constraint firstAttribute="width" constant="44" id="ZuG-iQ-Ijs"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="frY-nJ-h61" firstAttribute="centerY" secondItem="apx-3e-Hm4" secondAttribute="centerY" id="ACw-8W-gLg"/>
-                                                <constraint firstAttribute="trailing" secondItem="kMN-Ob-McD" secondAttribute="trailing" constant="30" id="Kd7-ry-aZB"/>
-                                                <constraint firstItem="kMN-Ob-McD" firstAttribute="centerY" secondItem="apx-3e-Hm4" secondAttribute="centerY" id="RfQ-bh-ZP5"/>
+                                                <constraint firstAttribute="bottom" secondItem="q1X-xb-02K" secondAttribute="bottom" constant="5" id="C1z-eK-F93"/>
+                                                <constraint firstItem="fG9-3B-Pvf" firstAttribute="leading" secondItem="q1X-xb-02K" secondAttribute="trailing" constant="15" id="Gy8-Ng-wPT"/>
+                                                <constraint firstItem="q1X-xb-02K" firstAttribute="top" secondItem="apx-3e-Hm4" secondAttribute="top" constant="5" id="YDA-NZ-M0U"/>
+                                                <constraint firstItem="fG9-3B-Pvf" firstAttribute="centerY" secondItem="apx-3e-Hm4" secondAttribute="centerY" id="bIH-bO-5TZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="fG9-3B-Pvf" secondAttribute="trailing" constant="30" id="j17-ou-xjm"/>
                                                 <constraint firstItem="frY-nJ-h61" firstAttribute="leading" secondItem="apx-3e-Hm4" secondAttribute="leadingMargin" constant="10" id="pIA-cl-tca"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="categoryLabel" destination="frY-nJ-h61" id="b4Q-fU-gF6"/>
-                                            <outlet property="imageBgView" destination="kMN-Ob-McD" id="SBf-eC-hOJ"/>
+                                            <outlet property="colorSelect" destination="fG9-3B-Pvf" id="bey-5c-klq"/>
+                                            <outlet property="colorView" destination="q1X-xb-02K" id="Cyc-zN-cE0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1073,9 +1082,6 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
